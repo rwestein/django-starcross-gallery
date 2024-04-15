@@ -43,7 +43,7 @@ Quick start
 
 4. Ensure a `MEDIA directory <https://docs.djangoproject.com/en/4.0/topics/files/>`_ is set up
 
-5. Run ``python manage.py makemigrations gallery``, then ``python manage.py migrate gallery`` to create the models.
+5. Run ``python manage.py migrate gallery`` to create the models.
 
 6. Start the development server and create albums from the admin site http://127.0.0.1:8000/admin/. It's not necessary to create albums if you prefer just a single image feed
 
