@@ -100,6 +100,7 @@ class ImageTests(TestCase):
         self.assertEqual(response.status_code, 200, "Error testing album view")
         self.assertContains(response, self.image.title, count=2, msg_prefix="Error testing image in album view")
 
+	@staticmethod
     def strptime(time_data, format_data):
         """ Create timezone aware or naive datetime object, depending on USE_TZ """
         d = datetime.strptime(time_data, format_data)
