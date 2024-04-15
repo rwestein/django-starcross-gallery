@@ -16,8 +16,7 @@ class ImageAdmin(admin.ModelAdmin):
     list_display = ('title', 'admin_thumbnail', 'date_taken', 'date_uploaded')
     list_filter = ('image_albums',)
     list_per_page = 25
-    readonly_fields = ('admin_thumbnail',)
-    exclude = ('exif_json',)
+    readonly_fields = ('admin_thumbnail', 'exif_json')
 
 
 class AlbumAdmin(SortableAdminMixin, admin.ModelAdmin):
