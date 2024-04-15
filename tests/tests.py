@@ -4,6 +4,7 @@ from django.conf import settings
 from django.utils.datastructures import MultiValueDict
 from django.contrib.auth.models import User
 from django.core.files.uploadedfile import SimpleUploadedFile
+from django.utils.timezone import make_aware
 
 import os
 from datetime import datetime
@@ -99,10 +100,17 @@ class ImageTests(TestCase):
         self.assertEqual(response.status_code, 200, "Error testing album view")
         self.assertContains(response, self.image.title, count=2, msg_prefix="Error testing image in album view")
 
+    def strptime(time_data, format_data):
+        """ Create timezone aware or naive datetime object, depending on USE_TZ """
+        d = datetime.strptime(time_data, format_data)
+        if settings.USE_TZ:
+            d = make_aware(d)
+        return d
+
     def test_image_properties(self):
         image = Image.objects.all()[0]
         self.assertEqual(image.title, ImageTests.test_image_title, "Incorrect title in image object")
-        self.assertEqual(image.date_taken, datetime.strptime("2013-03-21 15:04:53", "%Y-%m-%d %H:%M:%S"),
+        self.assertEqual(image.date_taken, self.strptime("2013-03-21 15:04:53", "%Y-%m-%d %H:%M:%S"),
                          "Incorrect date in image object")
         self.assertEqual(image.slug, self.test_slug, "Incorrect slug in image object")
 
