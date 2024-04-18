@@ -3,7 +3,7 @@ from django.utils.text import slugify
 from django.urls import reverse
 from django.utils.functional import cached_property
 from imagekit.models import ImageSpecField
-from imagekit.processors import ResizeToFit
+from imagekit.processors import ResizeToFit, Transpose
 from PIL import Image as pImage
 from PIL import TiffImagePlugin
 from PIL.ExifTags import TAGS
@@ -27,17 +27,23 @@ class Image(models.Model):
     data = models.ImageField(upload_to='images', storage=gallery_storage)
     data_thumbnail = ImageSpecField(
         source='data',
-        processors=[ResizeToFit(height=settings.GALLERY_THUMBNAIL_SIZE * settings.GALLERY_HDPI_FACTOR)],
+        processors=[
+            Transpose(),
+            ResizeToFit(height=settings.GALLERY_THUMBNAIL_SIZE * settings.GALLERY_HDPI_FACTOR)
+        ],
         format='JPEG',
         options={'quality': settings.GALLERY_RESIZE_QUALITY},
         cachefile_storage = gallery_thumbnail_storage
     )
     data_preview = ImageSpecField(
         source='data',
-        processors=[ResizeToFit(
-            width=settings.GALLERY_PREVIEW_SIZE * settings.GALLERY_HDPI_FACTOR,
-            height=settings.GALLERY_PREVIEW_SIZE * settings.GALLERY_HDPI_FACTOR
-        )],
+        processors=[
+            Transpose(),
+            ResizeToFit(
+                width=settings.GALLERY_PREVIEW_SIZE * settings.GALLERY_HDPI_FACTOR,
+                height=settings.GALLERY_PREVIEW_SIZE * settings.GALLERY_HDPI_FACTOR
+            )
+        ],
         format='JPEG',
         options={'quality': settings.GALLERY_RESIZE_QUALITY},
         cachefile_storage=gallery_thumbnail_storage
