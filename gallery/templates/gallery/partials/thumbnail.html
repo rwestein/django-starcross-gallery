@@ -1,16 +1,11 @@
 
-<div class="thumbnail">
-
-        <img id="image_empty_{{ image.pk }}"
-             class="image image_spacer"
-             alt="{{ image.title }}"
-             data-src="{{ image.data_thumbnail.url }}"
-             style="width: {% widthratio image.data_thumbnail.width 2 1 %}px"/>
-
-        <div class="overlay image_spacer">
-
-            <div class="label"> {{ image.title }} </div>
-
-        </div>
-
-</div>
+            <div class="thumbnail">
+                <img id="image_empty_{{ image.pk }}"
+                     class="image image_spacer"
+                     alt="{{ image.title }}"
+                     data-src="{{ image.data_thumbnail.url }}" />
+                     {# Removed access to width to speed up page rendering. Accessing width is very expensive on S3 #}
+                <div class="overlay image_spacer">
+                    <div class="label"> {{ image.title }} </div>
+                </div>
+            </div>

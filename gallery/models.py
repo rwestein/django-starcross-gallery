@@ -16,18 +16,21 @@ import json
 # Create storage class and instance, based on the GALLERY_STORAGE setting
 # This allows the user the flexibility to use Amazon S3 or any other object storage
 # provider. Default is local file storage.
-gallery_storage_class = storage.get_storage_class(settings.GALLERY_STORAGE)
-gallery_storage = gallery_storage_class()
+GalleryStorageClass = storage.get_storage_class(settings.GALLERY_STORAGE)
+gallery_storage = GalleryStorageClass()
+GalleryThumbnailStorageClass = storage.get_storage_class(settings.GALLERY_THUMBNAIL_STORAGE)
+gallery_thumbnail_storage = GalleryThumbnailStorageClass()
 
 
 class Image(models.Model):
 
-    data = models.ImageField(upload_to='images', storage=gallery_storage_class)
+    data = models.ImageField(upload_to='images', storage=gallery_storage)
     data_thumbnail = ImageSpecField(
         source='data',
         processors=[ResizeToFit(height=settings.GALLERY_THUMBNAIL_SIZE * settings.GALLERY_HDPI_FACTOR)],
         format='JPEG',
-        options={'quality': settings.GALLERY_RESIZE_QUALITY}
+        options={'quality': settings.GALLERY_RESIZE_QUALITY},
+        cachefile_storage = gallery_thumbnail_storage
     )
     data_preview = ImageSpecField(
         source='data',
@@ -36,7 +39,8 @@ class Image(models.Model):
             height=settings.GALLERY_PREVIEW_SIZE * settings.GALLERY_HDPI_FACTOR
         )],
         format='JPEG',
-        options={'quality': settings.GALLERY_RESIZE_QUALITY}
+        options={'quality': settings.GALLERY_RESIZE_QUALITY},
+        cachefile_storage=gallery_thumbnail_storage
     )
     date_uploaded = models.DateTimeField(auto_now_add=True)
     # exif_json stored the exif data in the database, which speeds up retrieving the
@@ -92,7 +96,6 @@ class Image(models.Model):
         if not self.exif_json:
             exif_dict = self._retrieve_exif_from_data()
             self.exif_json = json.JSONEncoder().encode(exif_dict)
-            self.save()
         return json.JSONDecoder().decode(self.exif_json)
 
     def retrieve_date_taken(self):

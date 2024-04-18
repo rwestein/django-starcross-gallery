@@ -25,4 +25,5 @@ GALLERY_IMAGE_MARGIN = getattr(settings, 'GALLERY_IMAGE_MARGIN', 6.0)
 # CSS Color Styling
 GALLERY_THEME_COLOR = getattr(settings, 'GALLERY_THEME_COLOR', "black")
 # Gallery Storage
-GALLERY_STORAGE = getattr(settings, 'GALLERY_STORAGE', "django.core.files.storage.FileSystemStorage")
+GALLERY_STORAGE = getattr(settings, 'GALLERY_STORAGE', settings.DEFAULT_FILE_STORAGE)
+GALLERY_THUMBNAIL_STORAGE = getattr(settings, 'GALLERY_THUMBNAIL_STORAGE', GALLERY_STORAGE)

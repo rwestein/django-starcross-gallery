@@ -77,7 +77,6 @@ class ImageCreate(GallerySettingsMixin, LoginRequiredMixin, FormView):
             image = Image.objects.create(data=data)
             if form.data.get('apk'):
                 image.image_albums.add(form.data['apk'])
-            image.save()
         messages.success(self.request, "Images added successfully")
         return super().form_valid(form)
 
@@ -100,10 +99,6 @@ class ImageCreate(GallerySettingsMixin, LoginRequiredMixin, FormView):
 
 class AlbumView(GallerySettingsMixin, DetailView):
     model = Album
-
-    def get_queryset(self):
-        album = super(AlbumView, self).get_queryset()
-        return album
 
     def get_context_data(self, **kwargs):
         context = super(AlbumView, self).get_context_data(**kwargs)
