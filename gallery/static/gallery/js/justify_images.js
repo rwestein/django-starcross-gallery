@@ -25,6 +25,7 @@ function justify_images() {
     // Build an array of images for the current row, and it's width
     let row_width = 0;
     let row_images = [];
+    let resize_factor = 1.0;
     for (let i=0; i < images.length; i++) {
         // Add the current image and it's width
         row_images.push(images[i]);
@@ -40,7 +41,7 @@ function justify_images() {
             // Account for the total width of all margins on this row
             const margin_total = image_margin * (row_images.length - 1);
             // Find the factor required to shrink or enlarge the images in this row
-            const resize_factor = (container_width - margin_total) / (row_width - margin_total);
+            resize_factor = (container_width - margin_total) / (row_width - margin_total);
             resize_row(row_images, resize_factor);
             // Reset values for new row
             row_width = 0;
