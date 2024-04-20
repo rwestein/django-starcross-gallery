@@ -77,6 +77,7 @@ class ImageCreate(GallerySettingsMixin, LoginRequiredMixin, FormView):
             image = Image.objects.create(data=data)
             if form.data.get('apk'):
                 image.image_albums.add(form.data['apk'])
+            image.save()
         messages.success(self.request, "Images added successfully")
         return super().form_valid(form)
 
