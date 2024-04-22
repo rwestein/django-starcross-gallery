@@ -13,7 +13,7 @@ def create_defaults_for_date_taken_field(apps, schema_editor):
             except FileNotFoundError:
                 # Use the current time stamp, can be changed if needed in the admin
                 image.date_taken = datetime.now()
-            image.save()
+            #image.save()
 
 
 class Migration(migrations.Migration):
