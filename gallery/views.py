@@ -103,8 +103,7 @@ class AlbumView(GallerySettingsMixin, DetailView):
 
     def get_context_data(self, **kwargs):
         context = super(AlbumView, self).get_context_data(**kwargs)
-        images = context['album'].images.all()
-        context['images'] = sorted(images, key=lambda i: i.date_taken)
+        context['images'] = context['album'].images.all().order_by('date_taken')
         return context
 
 
