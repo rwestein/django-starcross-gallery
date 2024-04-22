@@ -74,9 +74,10 @@ class ImageCreate(GallerySettingsMixin, LoginRequiredMixin, FormView):
         """ Bulk create images based on form data """
         image_data = form.files.getlist('data')
         for data in image_data:
-            image = Image.objects.create(data=data)
-            if form.data.get('apk'):
-                image.image_albums.add(form.data['apk'])
+            apk = form.data.get('apk')
+            image = Image.objects.create(album_id=apk, data=data)
+            if apk:
+                image.image_albums.add(apk)
             image.save()
         messages.success(self.request, "Images added successfully")
         return super().form_valid(form)
