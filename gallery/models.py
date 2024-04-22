@@ -23,8 +23,13 @@ gallery_thumbnail_storage = GalleryThumbnailStorageClass()
 
 
 class Image(models.Model):
+    def upload_dir(self, filename):
+        if settings.GALLERY_STORE_IMAGES_IN_ALBUM_DIR:
+            return f'images/{self.id}/{filename}'
+        else:
+            return f'images/{filename}'
 
-    data = models.ImageField(upload_to='images', storage=gallery_storage)
+    data = models.ImageField(upload_to=upload_dir, storage=gallery_storage)
     data_thumbnail = ImageSpecField(
         source='data',
         processors=[

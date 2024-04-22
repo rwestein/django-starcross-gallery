@@ -111,6 +111,11 @@ Margin between thumbnails in px. This can create a more or less condensed look
 
 Storage class definition for the images. Can be used to configure S3
 
+**GALLERY_STORE_IMAGES_IN_ALBUM_DIR** -- Default: False
+
+Setting that determines if images are stored in one central directory, or in a directory per album.
+A directory per album makes it easier to re-use different images with the same filename in different albums.
+
 Troubleshooting
 ---------------
 
