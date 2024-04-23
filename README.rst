@@ -118,7 +118,7 @@ A directory per album makes it easier to re-use different images with the same f
 
 **GALLERY_ALBUM_ORDER** -- Default: ['order', '-pk']
 
-Order of the albums. Use e.g. ['highlight__date_taken'] to sort by date of the highlight image (oldest to newest)
+Order of the albums. Use e.g. ['highlight.date_taken'] to sort by date of the highlight image (oldest to newest)
 
 
 Troubleshooting
