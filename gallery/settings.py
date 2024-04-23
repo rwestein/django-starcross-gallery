@@ -30,4 +30,4 @@ GALLERY_THUMBNAIL_STORAGE = getattr(settings, 'GALLERY_THUMBNAIL_STORAGE', GALLE
 # Allow storing images in album specific directories
 GALLERY_STORE_IMAGES_IN_ALBUM_DIR = getattr(settings, 'GALLERY_STORE_IMAGES_IN_ALBUM_DIR', False)
 # Reverse the order of the albums
-GALLERY_ALBUM_REVERSE_ORDER = getattr(settings, 'GALLERY_ALBUM_REVERSE_ORDER', False)
+GALLERY_ALBUM_ORDER = getattr(settings, 'GALLERY_ALBUM_ORDER', ['order', '-pk'])
