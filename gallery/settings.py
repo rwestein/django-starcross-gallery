@@ -27,5 +27,7 @@ GALLERY_THEME_COLOR = getattr(settings, 'GALLERY_THEME_COLOR', "black")
 # Gallery Storage
 GALLERY_STORAGE = getattr(settings, 'GALLERY_STORAGE', settings.DEFAULT_FILE_STORAGE)
 GALLERY_THUMBNAIL_STORAGE = getattr(settings, 'GALLERY_THUMBNAIL_STORAGE', GALLERY_STORAGE)
-# Setting to allow storing images in album specific directories
+# Allow storing images in album specific directories
 GALLERY_STORE_IMAGES_IN_ALBUM_DIR = getattr(settings, 'GALLERY_STORE_IMAGES_IN_ALBUM_DIR', False)
+# Reverse the order of the albums
+GALLERY_ALBUM_REVERSE_ORDER = getattr(settings, 'GALLERY_ALBUM_REVERSE_ORDER', False)

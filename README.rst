@@ -113,8 +113,12 @@ Storage class definition for the images. Can be used to configure S3
 
 **GALLERY_STORE_IMAGES_IN_ALBUM_DIR** -- Default: False
 
-Setting that determines if images are stored in one central directory, or in a directory per album.
+Determines if images are stored in one central directory, or in a directory per album.
 A directory per album makes it easier to re-use different images with the same filename in different albums.
+
+**GALLERY_ALBUM_REVERSE_ORDER** -- Default: False
+
+Reverse the order of the albums (newest first) if set to True
 
 Troubleshooting
 ---------------
