@@ -6,6 +6,13 @@ from django.conf import settings
 from django.core.files import storage
 
 
+# Determine the storage class for the gallery
+try:
+    GalleryStorageClass = storage.get_storage_class(settings.GALLERY_STORAGE)
+except AttributeError:
+    GalleryStorageClass = None
+
+
 class Migration(migrations.Migration):
 
     dependencies = [
@@ -21,7 +28,7 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name='image',
             name='data',
-            field=models.ImageField(storage=storage.get_storage_class(settings.GALLERY_STORAGE),
+            field=models.ImageField(storage=GalleryStorageClass,
                                     upload_to=gallery.models.Image.upload_dir),
         ),
     ]
