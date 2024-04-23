@@ -113,7 +113,7 @@ class AlbumList(GallerySettingsMixin, ListView):
     template_name = 'gallery/album_list.html'
 
     def get_ordering(self):
-        if settings.GALLERY_ALBUM_REVERSE_ORDER:
-            return ['-order', 'pk']
+        if settings.GALLERY_ALBUM_ORDER:
+            return settings.GALLERY_ALBUM_ORDER
         else:
             return ['order', '-pk']

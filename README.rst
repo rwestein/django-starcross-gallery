@@ -116,9 +116,10 @@ Storage class definition for the images. Can be used to configure S3
 Determines if images are stored in one central directory, or in a directory per album.
 A directory per album makes it easier to re-use different images with the same filename in different albums.
 
-**GALLERY_ALBUM_REVERSE_ORDER** -- Default: False
+**GALLERY_ALBUM_ORDER** -- Default: ['order', '-pk']
 
-Reverse the order of the albums (newest first) if set to True
+Order of the albums. Use e.g. ['highlight.date_taken'] to sort by date of the highlight image (oldest to newest)
+
 
 Troubleshooting
 ---------------
