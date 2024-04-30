@@ -1,16 +1,18 @@
-from django.test import TestCase
+from django.test import TestCase, override_settings
 from django.urls import reverse
 from django.conf import settings
 from django.utils.datastructures import MultiValueDict
 from django.contrib.auth.models import User
 from django.core.files.uploadedfile import SimpleUploadedFile
 from django.utils.timezone import make_aware
+from django.core.files.storage import DefaultStorage, FileSystemStorage
 
 import os
 from datetime import datetime
 
 from gallery.models import Album, Image
 from gallery.forms import ImageCreateForm
+from gallery.storages import StorageFactory
 
 
 class ImageTests(TestCase):
@@ -139,3 +141,23 @@ class ImageTests(TestCase):
 
     def test_image_modified_time(self):
         self.assertIsInstance(self.image.mtime, datetime)
+
+
+class TestStorageClass(FileSystemStorage):
+    pass
+
+
+class StorageClassTests(TestCase):
+    def test_default_storage_class(self):
+        storage = StorageFactory().determine_storage()
+        self.assertIsInstance(storage, DefaultStorage)
+
+    @override_settings(GALLERY_STORAGE="tests.tests.TestStorageClass")
+    def test_pre42_storage_class(self):
+        storage = StorageFactory().determine_storage()
+        self.assertIsInstance(storage, TestStorageClass)
+
+    @override_settings(STORAGES={'gallery': {'BACKEND': 'tests.tests.TestStorageClass'}})
+    def test_post42_storage_class(self):
+        storage = StorageFactory().determine_storage()
+        self.assertIsInstance(storage, TestStorageClass)

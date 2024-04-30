@@ -10,16 +10,9 @@ from PIL.ExifTags import TAGS
 from gallery import settings
 from pathlib import Path
 from datetime import datetime
-from django.core.files import storage
 import json
 
-# Create storage class and instance, based on the GALLERY_STORAGE setting
-# This allows the user the flexibility to use Amazon S3 or any other object storage
-# provider. Default is local file storage.
-GalleryStorageClass = storage.get_storage_class(settings.GALLERY_STORAGE)
-gallery_storage = GalleryStorageClass()
-GalleryThumbnailStorageClass = storage.get_storage_class(settings.GALLERY_THUMBNAIL_STORAGE)
-gallery_thumbnail_storage = GalleryThumbnailStorageClass()
+from .storages import gallery_storage, gallery_thumbnail_storage
 
 
 class Image(models.Model):

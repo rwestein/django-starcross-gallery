@@ -24,9 +24,11 @@ GALLERY_HDPI_FACTOR = getattr(settings, 'GALLERY_HDPI_FACTOR', 2)
 GALLERY_IMAGE_MARGIN = getattr(settings, 'GALLERY_IMAGE_MARGIN', 6.0)
 # CSS Color Styling
 GALLERY_THEME_COLOR = getattr(settings, 'GALLERY_THEME_COLOR', "black")
-# Gallery Storage
-GALLERY_STORAGE = getattr(settings, 'GALLERY_STORAGE', settings.DEFAULT_FILE_STORAGE)
-GALLERY_THUMBNAIL_STORAGE = getattr(settings, 'GALLERY_THUMBNAIL_STORAGE', GALLERY_STORAGE)
+
+# Gallery Storage. These settings are dynamically determined in storages.py, no defaults needed here
+# GALLERY_STORAGE = getattr(settings, 'GALLERY_STORAGE', settings.DEFAULT_FILE_STORAGE)
+# GALLERY_THUMBNAIL_STORAGE = getattr(settings, 'GALLERY_THUMBNAIL_STORAGE', GALLERY_STORAGE)
+
 # Allow storing images in album specific directories
 GALLERY_STORE_IMAGES_IN_ALBUM_DIR = getattr(settings, 'GALLERY_STORE_IMAGES_IN_ALBUM_DIR', False)
 # Reverse the order of the albums
