@@ -70,16 +70,30 @@ class ImageCreate(GallerySettingsMixin, LoginRequiredMixin, FormView):
     form_class = ImageCreateForm
     template_name = 'gallery/image_upload.html'
 
+    def format_images_added_string(self, first_image, last_image, num_images):
+        if num_images == 1:
+            return f'Image {first_image} added successfully'
+        elif num_images == 2:
+            return f'Images {first_image} and {last_image} added successfully'
+        else:
+            return f'Images {first_image} ... {last_image} added successfully'
+
     def form_valid(self, form):
         """ Bulk create images based on form data """
         image_data = form.files.getlist('data')
+        first_image = None
+        last_image = None
         for data in image_data:
             apk = form.data.get('apk')
             image = Image.objects.create(album_id=apk, data=data)
+            if first_image is None:
+                first_image = image
+            last_image = image
             if apk:
                 image.image_albums.add(apk)
             image.save()
-        messages.success(self.request, "Images added successfully")
+
+        messages.success(self.request, self.format_images_added_string(first_image, last_image, len(image_data)))
         return super().form_valid(form)
 
     def get_success_url(self):
