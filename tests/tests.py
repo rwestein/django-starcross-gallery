@@ -1,3 +1,4 @@
+import django
 from django.test import TestCase, override_settings
 from django.urls import reverse
 from django.conf import settings
@@ -9,6 +10,7 @@ from django.core.files.storage import DefaultStorage, FileSystemStorage
 
 import os
 from datetime import datetime
+import unittest
 
 from gallery.models import Album, Image
 from gallery.forms import ImageCreateForm
@@ -157,6 +159,7 @@ class StorageClassTests(TestCase):
         storage = StorageFactory().determine_storage()
         self.assertIsInstance(storage, TestStorageClass)
 
+    @unittest.skipIf(django.VERSION < (4, 2), 'Use of settings.STORAGES needs Django >= 4.2')
     @override_settings(STORAGES={'gallery': {'BACKEND': 'tests.tests.TestStorageClass'}})
     def test_post42_storage_class(self):
         storage = StorageFactory().determine_storage()

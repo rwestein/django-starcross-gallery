@@ -2,8 +2,12 @@ import django
 
 from django.core.files import storage
 from django.conf import settings as django_settings
-from django.core.files.storage.handler import InvalidStorageError
-
+try:
+    from django.core.files.storage.handler import InvalidStorageError
+except ModuleNotFoundError:
+    # InvalidStorageError is not used when it's not available (for Django < 4.2),
+    # so just ignore it.
+    pass
 
 # Create storage class and instance, based on the GALLERY_STORAGE setting
 # This allows the user the flexibility to use Amazon S3 or any other object storage
