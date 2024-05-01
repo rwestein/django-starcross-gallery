@@ -46,26 +46,28 @@ class StorageFactory:
         except InvalidStorageError:
             pass
 
-    def determine_storage(self):
-        storage_instance = self.determine_post42_storage()
+    @classmethod
+    def determine_storage(cls):
+        storage_instance = cls.determine_post42_storage()
         if storage_instance is not None:
             return storage_instance
-        storage_instance = self.determine_pre42_storage()
+        storage_instance = cls.determine_pre42_storage()
         if storage_instance is not None:
             return storage_instance
         return storage.DefaultStorage()
 
-    def determine_thumbnail_storage(self):
-        storage_instance = self.determine_post42_thumbnail_storage()
+    @classmethod
+    def determine_thumbnail_storage(cls):
+        storage_instance = cls.determine_post42_thumbnail_storage()
         if storage_instance is not None:
             return storage_instance
-        storage_instance = self.determine_pre42_thumbnail_storage()
+        storage_instance = cls.determine_pre42_thumbnail_storage()
         if storage_instance is not None:
             return storage_instance
         # If it's not set explicitly, fall back to the setting for regular
         # gallery storage
-        return self.determine_storage()
+        return cls.determine_storage()
 
 
-gallery_storage = StorageFactory().determine_storage()
-gallery_thumbnail_storage = StorageFactory().determine_thumbnail_storage()
+gallery_storage = StorageFactory.determine_storage()
+gallery_thumbnail_storage = StorageFactory.determine_thumbnail_storage()
